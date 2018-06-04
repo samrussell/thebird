@@ -1,10 +1,12 @@
 require "./lib/preflop"
+require "./lib/play"
 
 describe Preflop do
   let(:preflop) { Preflop.new(plays) }
+  let(:plays) { play_types.map { |play_type| Play.new(play_type, ) nil} }
 
   context "When UTG raises" do
-    let(:plays) {
+    let(:play_types) {
       [
         :raise,
         :fold,
@@ -48,7 +50,7 @@ describe Preflop do
   end
 
   context "When UTG limps" do
-    let(:plays) {
+    let(:play_types) {
       [
         :call,
         :fold,
@@ -92,7 +94,7 @@ describe Preflop do
   end
 
   context "When everyone folds" do
-    let(:plays) {
+    let(:play_types) {
       [
         :fold,
         :fold,
@@ -136,7 +138,7 @@ describe Preflop do
   end
 
   context "When UTG+2 raises" do
-    let(:plays) {
+    let(:play_types) {
       [
         :fold,
         :fold,
