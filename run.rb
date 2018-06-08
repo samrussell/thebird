@@ -38,9 +38,10 @@ def parse_street(street_name, street_lines, players_by_username)
   end
 
   if street_lines.any? { |line| /collected \$[0-9.]+ from pot/.match(line) }
-    #won at flop
-    winning_lines = street_lines.pop(2)
-    raise "#{street_name} winning line fail: #{street_lines} #{winning_lines}" unless /collected \$[0-9.]+ from pot/.match(winning_lines[0])
+    # handle two cases - extra returned and hand shown or not
+    winning_line = street_lines.pop
+    winning_line = street_lines.pop unless /collected \$[0-9.]+ from pot/.match(winning_line)
+    raise "#{street_name} winning line fail: #{street_lines} #{winning_line}" unless /collected \$[0-9.]+ from pot/.match(winning_line)
   end
 
   plays = street_lines.flat_map do |street_line|
