@@ -1,10 +1,11 @@
 require "./lib/utils"
 
 class Preflop
-  attr_reader :plays
+  attr_reader :plays, :hole_cards
 
-  def initialize(plays)
+  def initialize(plays, hole_cards)
     @plays = plays
+    @hole_cards = hole_cards
 
     categorise_plays
   end
@@ -49,8 +50,6 @@ class Preflop
     fourbet && fourbet.player.seat_num == seat_num
   end
 
-  private
-
   def first_raise
     possible_first_raise = @possible_first_raises.last
     
@@ -68,6 +67,8 @@ class Preflop
     
     possible_fourbet if possible_fourbet && possible_fourbet.type == :raise
   end
+
+  private
 
   def categorise_plays
     @possible_opens = up_to_point(@plays) {|play| play.type != :fold}

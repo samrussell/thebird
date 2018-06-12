@@ -3,7 +3,7 @@ require "./lib/play"
 require "./lib/player"
 
 describe Preflop do
-  let(:preflop) { Preflop.new(plays) }
+  let(:preflop) { Preflop.new(plays, "As Ac") }
   let(:players) { [3, 4, 5, 6, 7, 8, 9, 1, 2].map { |seat_num| Player.new(nil, seat_num, nil) } }
   let(:plays) { play_types.zip(players).map { |play_type, player| Play.new(play_type, player, nil, nil) } }
 

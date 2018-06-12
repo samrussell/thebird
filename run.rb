@@ -202,7 +202,7 @@ def parse_hand(hand_text)
 
   summary = parse_summary(lines, players_by_username)
 
-  Hand.new(players, preflop)
+  Hand.new(players, preflop, streets)
 end
 
 #hands = hand_texts[0..1000].map{|x| parse_hand(x)}
@@ -226,7 +226,6 @@ end
 
 seat_nums = [2, 3, 4, 5, 6, 7, 8, 9, 1]
 
-
 puts "=== Open raise ==="
 open_raise = seat_nums.map {|seat_num| hands.select{|hand| hand.preflop.open_raised?(seat_num)}.size / hands.select{|hand| hand.preflop.could_open?(seat_num)}.size.to_f }
 print_results(open_raise)
@@ -246,6 +245,10 @@ print_results(foldtofourbet)
 puts "=== Wins with open raise ==="
 win_with_open_raise = seat_nums.map {|seat_num| hands.select{|hand| hand.preflop.won_with_open_raise?(seat_num)}.size / hands.select{|hand| hand.preflop.open_raised?(seat_num)}.size.to_f }
 print_results(win_with_open_raise)
+
+puts "=== Open raise got 3bet into ==="
+open_raise_got_3bet = seat_nums.map {|seat_num| hands.select{|hand| hand.preflop.open_raised?(seat_num) && hand.preflop.threebet }.size / hands.select{|hand| hand.preflop.open_raised?(seat_num)}.size.to_f }
+print_results(open_raise_got_3bet)
 
 puts "=== BTN steal 3bet ==="
 button_steals = hands.select {|hand| hand.preflop.open_raised?(1)}
@@ -273,5 +276,5 @@ sb_fourbets_bb = bb_defends.select{|hand| hand.preflop.fourbet?(2) }
 puts "SB 4bets BB: #{(sb_fourbets_bb.size.to_f / bb_defends.size.to_f * 100).round(2)}% (#{sb_fourbets_bb.size}/#{bb_defends.size})"
 puts "\n"
 
-#byebug
-#puts "done"
+byebug
+puts "done"

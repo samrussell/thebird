@@ -6,7 +6,8 @@ class PreflopBuilder
 
   def build()
     hole_card_line = @preflop_lines.shift
-    raise "Bad hole card line: #{hole_card_line}" unless /Dealt to .+ \[.. ..\]/.match(hole_card_line)
+    raise "Bad hole card line: #{hole_card_line}" unless /Dealt to .+ \[(.. ..)\]/.match(hole_card_line)
+    hole_cards = $1
 
     # filter junk lines
 
@@ -39,6 +40,6 @@ class PreflopBuilder
       end
     end
 
-    Preflop.new(plays)
+    Preflop.new(plays, hole_cards)
   end
 end
